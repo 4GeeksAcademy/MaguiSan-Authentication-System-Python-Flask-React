@@ -100,7 +100,7 @@ def login():
         return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
 
 # Obtiene todos los usuarios desde un usuario logueado (Ruta restringida por token)
-@api.route('/users')
+@api.route('/users') #/private
 @jwt_required()
 def get_users_token():
     try:
