@@ -67,7 +67,7 @@ def signup_user():
         # pasarlo a la BD con una session copia de db y al hacer commit ya lo reemplaza
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"message": "User created successfully"}), 201
+        return jsonify({"message": "User created successfully", "ok":True}), 201
     except Exception as e:
         return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
 
@@ -88,7 +88,7 @@ def login():
         pass_hash_db = login_user.password
         result = bcrypt.check_password_hash(pass_hash_db, pass_user)
         if result:
-            # tomamos el id del usuario logeado
+            # Capturamos el id del usuario logeado
             user_id = login_user.id
             # creamos el token con el id del usuario
             # Access_token me sirve para restringir la vista solo a usuarios logueados

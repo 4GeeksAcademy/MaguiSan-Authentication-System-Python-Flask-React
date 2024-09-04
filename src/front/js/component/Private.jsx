@@ -8,7 +8,6 @@ export const Private = () => {
 			<img src="https://picsum.photos/200/300/?blur" className="rounded-4 p-2" alt="" />
 			<img src="https://picsum.photos/200/300" className="rounded-4 p-2" alt="" />
 			<img src="https://picsum.photos/200/300?grayscale" className="rounded-4 p-2" alt="" />
-			<h2>Lista de usuarios</h2>
 			{/* <div className="row">
 				<div className="col">
 					<select className="form-select mb-3" id="user-select" value={name} onChange={(e) => setName(e.target.value)}>
