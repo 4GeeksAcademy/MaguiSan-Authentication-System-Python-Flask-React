@@ -1,13 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Login = () => {
     const{store, actions} = useContext(Context)
-    // console.log(actions.login({
-    //     "email": "msr@msr.com",
-    //     "password": "msr"
-    // }))
+    const navigate = useNavigate()
     const [data, setData] = useState({
         email:"",
         password:""
@@ -17,11 +14,12 @@ export const Login = () => {
         let type = e.target.name
         setData({...data, [type]:input_value})
     }
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault()
         try {
             console.log(data)
-            actions.login(data)
+            await actions.login(data)
+            navigate("/PrivateUser")
             setData({
                 email:"",
                 password:""
@@ -31,7 +29,6 @@ export const Login = () => {
         }
     }
 	return (
-        // <div className="p-2 w-75">
             <form className="row g-3 text-start" onSubmit={handleSubmit}>
                 <div className="col-md-12">
                     <label htmlFor="email" className="form-label fw-semibold">Email</label>
@@ -42,12 +39,8 @@ export const Login = () => {
                     <input value={data.password} name="password" type="password" className="form-control" id="pass" placeholder="Ejm. M4ge3k$" onChange={handleData} required/>
                 </div>
                 <div className="col-md-12">
-                    <Link to="/PrivateUser">
-                        {/* <button className="btn btn-link fw-semibold text-success-emphasis">Access token...</button> */}
-                        <button className="btn w-100 fw-semibold bg-success-subtle border border-black fw-bold" type="submit" >Log In</button>
-                    </Link>
+                    <button className="btn w-100 fw-semibold bg-success-subtle border border-black fw-bold" type="submit">Log In</button>
                 </div>
             </form>
-        // </div>
 	);
 };

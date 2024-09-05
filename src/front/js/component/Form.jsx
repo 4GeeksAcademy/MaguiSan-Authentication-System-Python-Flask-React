@@ -32,7 +32,6 @@ export const Form = () => {
         }
     }
     return(
-        // <div className="p-2 w-75">
             <form className="row g-3 text-start" onSubmit={handleSubmit}>
                 <div className="col-md-12">
                     <label htmlFor="nameAdd" className="form-label fw-semibold">Name</label>
@@ -50,6 +49,5 @@ export const Form = () => {
                     <button  type="submit" className="btn w-100 fw-semibold bg-success-subtle border border-black fw-bold">Register</button>
                 </div>
             </form>
-        // </div>
     );
 };

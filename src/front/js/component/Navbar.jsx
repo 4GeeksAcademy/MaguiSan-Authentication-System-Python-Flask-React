@@ -1,42 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+    const{store, actions} = useContext(Context)
+    const navigate = useNavigate()
+    const token = localStorage.getItem("token")
+    const handleOut = () =>{
+        if (token) {
+            actions.logout()
+            navigate("/")
+        } else {
+            alert("First, log in to an account")
+        }
+    }
 	return (
-        <nav class="nav flex-column text-start">
-            <a className="nav-link active text-info-emphasis fw-bold fs-3" aria-current="page" href="#">MageeksApp</a>
-            <a className="nav-link" href="#">Users List</a>
-            <a className="nav-link" href="#">Edit profile</a>
-            <a className="nav-link" href="#">Log Out</a>
+        <nav className="nav flex-column text-start">
+            <ul className="list-group text-center fw-bold">
+                <li className="list-group-item"><a className="nav-link active text-info-emphasis fw-bold fs-3" aria-current="page" href="#">MageeksApp</a></li>
+                <li className="list-group-item"><a className="nav-link" href="#"><img src="https://picsum.photos/200/200" className="rounded-circle p-2" alt="" /></a></li>
+                <li className="list-group-item"></li>
+                <li className="list-group-item"><a className="nav-link" href="#">Sign In</a></li>
+                <li className="list-group-item"><a className="nav-link" href="#" onClick={handleOut}>Log Out</a></li>
+            </ul>
         </nav>
-        // <nav className="navbar navbar-expand-lg mt-0 bg-body-tertiary sticky-top">
-        //     <div className="container-fluid">
-        //         <a className="navbar-brand text-info-emphasis fw-bold fs-3" href="#">MageeksApp</a>
-        //         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        //             <span className="navbar-toggler-icon"></span>
-        //         </button>
-        //         <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
-        //             <ul className="navbar-nav mb-2 mb-lg-0">
-        //                 <li className="nav-item">
-        //                     <a className="nav-link active" aria-current="page" href="#">Home</a>
-        //                 </li>
-        //                 <li className="nav-item dropdown">
-        //                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        //                         Dropdown
-        //                     </a>
-        //                     <ul className="dropdown-menu">
-        //                         <li><a className="dropdown-item" href="#">Action</a></li>
-        //                         <li><a className="dropdown-item" href="#">Another action</a></li>
-        //                         <li><a className="dropdown-item" href="#">Something else here</a></li>
-        //                     </ul>
-        //                 </li>
-        //             </ul>
-        //             <form className="d-flex" role="search">
-        //                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        //                 <button className="btn btn-outline-success" type="submit">Search</button>
-        //             </form>
-        //         </div>
-        //     </div>
-        //</nav>
 	);
 };

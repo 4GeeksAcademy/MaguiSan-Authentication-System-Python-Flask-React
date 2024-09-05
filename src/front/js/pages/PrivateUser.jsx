@@ -3,23 +3,21 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import { Private } from "../component/Private.jsx";
 import { Navbar } from "../component/Navbar.jsx";
-
+import { UsersList } from "../component/UsersList.jsx";
 
 export const PrivateUser = () => {
-	const { store, actions } = useContext(Context);
 	return (
 		<div className="text-center mt-2">
 			<div className="row">
-				<div className="col-1">
+				<div className="col-md-3">
 					<Navbar/>
 				</div>
-				<div className="col">
+				<div className="col-md-9">
+					<h2 className="text-info-emphasis fst-italic fw-light display-1">Welcome!</h2>
 					<Private/>
+					<UsersList/>
 				</div>
 			</div>
-            <Link to="/">
-                <button className="btn btn-primary">App...</button>
-            </Link>
 		</div>
 	);
 };

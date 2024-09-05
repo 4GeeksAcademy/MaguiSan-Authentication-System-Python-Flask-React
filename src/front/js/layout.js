@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BackendURL } from "./component/backendURL";
 
 import injectContext from "./store/appContext";
-import { Single } from "./pages/single";
 import { App } from "./pages/App.jsx";
 import { SignUp } from "./pages/SignUp.jsx";
 import { PrivateUser } from "./pages/PrivateUser.jsx";
@@ -22,7 +21,6 @@ const Layout = () => {
                         <Route element={<App />} path="/" />
                         <Route element={<SignUp />} path="/SignUp" />
                         <Route element={<PrivateUser />} path="/PrivateUser" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer/>

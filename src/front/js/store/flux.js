@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			//Al refrescarse la pagina, el store vuelve a su estado inical
 			message: null,
-			
+			usersList: [],
 		},
 		actions: {
 			//Agregando usuarios nuevos (Registro de usuarios)
@@ -40,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert(`Welcome ${data.name}`)
 						localStorage.setItem('token', data.access_token)
 						localStorage.setItem('name', data.name)
-						localStorage.setItem('token', data.email)
+						localStorage.setItem('email', data.email)
 					} else {
 						alert("Algo salio mal")
 					}
@@ -48,11 +48,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error)
 				}
 			},
+			//Obteniendo Lista de usuarios desde un usuario logueado
+			getUsersList: async() => {
+				let token = localStorage.getItem('token')
+				if (!token) {
+					alert("First log in to get a token")
+					return
+				}
+				try {
+					let response = await fetch("https://sturdy-space-potato-g4x5vq4rjjqxfpgpp-3001.app.github.dev/api/users", {
+						headers:{
+							Authorization: `Bearer ${token}`,
+						}
+					})
+					let data = await response.json()
+					console.log(data)
+					//Es mejor guardar los datos en el local storage
+					if (data.users_list) {
+						setStore({...getStore(), usersList: data.users_list})
+					} else {
+						alert("Algo salio mal")
+					}
+				} catch (error) {
+					console.error(error)
+				}
+			},
+			//Funcion para cerrar sesion
+			logout: () => {
+				localStorage.removeItem('token')
+				setStore({})
+				console.log("Logged out successfully!");
+			},
+
+
 
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
@@ -65,20 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			
 		}
 	};
 };
