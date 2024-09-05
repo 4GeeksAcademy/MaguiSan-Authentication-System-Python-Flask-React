@@ -13,7 +13,6 @@ export const PrivateUser = () => {
 					<Navbar/>
 				</div>
 				<div className="col-md-9">
-					<h2 className="text-info-emphasis fst-italic fw-light display-1">Welcome!</h2>
 					<Private/>
 					<UsersList/>
 				</div>

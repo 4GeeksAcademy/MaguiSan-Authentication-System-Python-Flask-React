@@ -17,15 +17,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let data = await response.json()
 					console.log(data)
 					if (data.ok) {
-						alert(`Welcome ${dataForm.name}`)
+						alert(`Account created successfully! Welcome ${dataForm.name}!`)
 					} else {
-						alert("Algo salio mal")
+						alert("Something went wrong")
 					}
 				} catch (error) {
 					console.error(error)
 				}
 			},
-			//Agregando informacion para ingresar al usuario (Inicio de sesion de usuarios)
+			//Ingresando datos del usuario (Inicio de sesion de usuarios)
 			login: async (dataLogin) => {
 				try {
 					let response = await fetch("https://sturdy-space-potato-g4x5vq4rjjqxfpgpp-3001.app.github.dev/api/login", {
@@ -35,14 +35,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					let data = await response.json()
 					console.log(data)
-					//Es mejor guardar los datos en el local storage
+					//Es mejor guardar los datos en el local storage para luego acceder a ellos
 					if (data.access_token) {
 						alert(`Welcome ${data.name}`)
 						localStorage.setItem('token', data.access_token)
 						localStorage.setItem('name', data.name)
 						localStorage.setItem('email', data.email)
 					} else {
-						alert("Algo salio mal")
+						alert("Something went wrong")
 					}
 				} catch (error) {
 					console.error(error)
@@ -63,11 +63,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					let data = await response.json()
 					console.log(data)
-					//Es mejor guardar los datos en el local storage
 					if (data.users_list) {
 						setStore({...getStore(), usersList: data.users_list})
 					} else {
-						alert("Algo salio mal")
+						alert("Something went wrong")
 					}
 				} catch (error) {
 					console.error(error)
@@ -79,7 +78,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({})
 				console.log("Logged out successfully!");
 			},
-
 
 
 			// Use getActions to call a function within a fuction

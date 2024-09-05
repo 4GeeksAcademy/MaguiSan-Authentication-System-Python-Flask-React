@@ -19,11 +19,11 @@ export const Login = () => {
         try {
             console.log(data)
             await actions.login(data)
-            navigate("/PrivateUser")
             setData({
                 email:"",
                 password:""
             })
+            navigate("/PrivateUser")
         } catch (error) {
             console.error(error)
         }

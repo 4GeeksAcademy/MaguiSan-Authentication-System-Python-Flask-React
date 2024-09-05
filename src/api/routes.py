@@ -19,31 +19,6 @@ jwt = JWTManager()
 # Allow CORS requests to this API
 CORS(api)
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-    return jsonify(response_body), 200
-
-# Obtiene informacion de todos los usuarios
-# @api.route('/users', methods=['GET'])
-# def get_users():
-#     try:
-#         users_results = User.query.all()
-#         # print(users_results)
-#         results = list(map(lambda item: item.serialize(), users_results))
-#         # print(results)
-#         if results:
-#             response_body = {
-#                 "msg": "ok",
-#                 "results": results
-#             }
-#             return jsonify(response_body), 200
-#         return jsonify({'error': 'Users not found'}), 404
-#     except Exception as e:
-#         return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
-
 # Agregar un usuario nuevo
 @api.route('/signup', methods=['POST'])
 def signup_user():
@@ -57,15 +32,11 @@ def signup_user():
         existing_user = User.query.filter_by(email = new_email).first()
         if existing_user:
             return jsonify({'error': 'Email already exists. Please try another one'}), 409
-        # encriptacion del paswword
-        # objeto.propiedad/metodo(argumento).-ponemos en un formato de codigo q sea legible y guardable en la DB-
-        # para que genere el password hasheado
+        # Encriptacion del paswword para que genere el password hasheado
         pass_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
-        # propiedades ..valores q le pasamos, se crea con un id incremental q se genera automaticamente
         # Creacion de un nuevo usuario
         new_user = User(name=new_name, email=new_email, password=pass_hash)
-        # pasarlo a la BD con una session copia de db y al hacer commit ya lo reemplaza
-        db.session.add(new_user)
+        db.session.add(new_user) # pasarlo a la BD con una session copia de db y al hacer commit ya lo reemplaza
         db.session.commit()
         return jsonify({"message": "User created successfully", "ok":True}), 201
     except Exception as e:
@@ -90,9 +61,7 @@ def login():
         if result:
             # Capturamos el id del usuario logeado
             user_id = login_user.id
-            # creamos el token con el id del usuario
-            # Access_token me sirve para restringir la vista solo a usuarios logueados
-            access_token = create_access_token(identity = user_id)
+            access_token = create_access_token(identity = user_id) # Creamos el token con el id del usuario
             return jsonify({'access_token': access_token, 'name':login_user.name, 'email':login_user.email}), 200
         else:
             return jsonify({'error': 'Incorrect password'}), 404
@@ -104,7 +73,6 @@ def login():
 @jwt_required()
 def get_users_token():
     try:
-        #obteniendo el id del usuario del token
         get_user_id = get_jwt_identity()
         if get_user_id:
             users = User.query.all()
