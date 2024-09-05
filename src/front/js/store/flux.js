@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Agregando usuarios nuevos (Registro de usuarios)
 			signUp: async (dataForm) => {
 				try {
-					let response = await fetch("https://sturdy-space-potato-g4x5vq4rjjqxfpgpp-3001.app.github.dev/api/signup", {
+					let response = await fetch(process.env.BACKEND_URL+"/api/signup", {
 						method:"POST",
 						body: JSON.stringify(dataForm),
 						headers:{"content-type":"application/json"}
@@ -28,7 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//Ingresando datos del usuario (Inicio de sesion de usuarios)
 			login: async (dataLogin) => {
 				try {
-					let response = await fetch("https://sturdy-space-potato-g4x5vq4rjjqxfpgpp-3001.app.github.dev/api/login", {
+					let response = await fetch(process.env.BACKEND_URL+"/api/login", {
 						method:"POST",
 						body: JSON.stringify(dataLogin),
 						headers:{"content-type":"application/json"}
@@ -56,7 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return
 				}
 				try {
-					let response = await fetch("https://sturdy-space-potato-g4x5vq4rjjqxfpgpp-3001.app.github.dev/api/users", {
+					let response = await fetch(process.env.BACKEND_URL+"/api/users", {
 						headers:{
 							Authorization: `Bearer ${token}`,
 						}
@@ -76,8 +76,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				localStorage.removeItem('token')
 				setStore({})
-				console.log("Logged out successfully!");
+				alert("Logged out successfully!");
 			},
+
 
 
 			// Use getActions to call a function within a fuction
@@ -93,7 +94,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-			
 		}
 	};
 };
